@@ -8,11 +8,12 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FiltersViewControllerDelegate {
+class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FiltersViewControllerDelegate, UISearchBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var businesses: [Business]!
     
+    @IBOutlet weak var searchBar: UISearchBar!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,6 +21,8 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
+        
+        searchBar.delegate = self
         
         Business.searchWithTerm(term: "Thai", completion: { (businesses: [Business]?, error: Error?) -> Void in
             
@@ -86,14 +89,49 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String : AnyObject]) {
         
         var categories = filters["categories"] as? [String]
-        Business.searchWithTerm(term: "restaurants", sort: nil, categories: categories, deals: nil, completion: {
-            (businesses:[Business]?, error: Error?) -> Void in
+        var myDist = filters["distance"] as? Float
+       
+        if (filters["sort"] != nil) {
+            Business.searchWithTerm(term: "restaurants",
+                                    sort: YelpSortMode(rawValue: (filters["sort"] as! Int)),
+                                    dist: myDist,
+                                    categories: categories,
+                                    deals: filters["deals"] as! Bool,
+                                    completion: {
+                (businesses:[Business]?, error: Error?) -> Void in
                 self.businesses = businesses
                 self.tableView.reloadData()
-            
-            }
-        )
+                
+                }
+            )
+        } else {
+            Business.searchWithTerm(term: "restaurants",
+                                    sort: nil,
+                                    dist: myDist,
+                                    categories: categories,
+                                    deals: filters["deals"] as! Bool,
+                                    completion: {
+                                        (businesses:[Business]?, error: Error?) -> Void in
+                                        self.businesses = businesses
+                                        self.tableView.reloadData()
+                                        
+                }
+            )
+        }
+
+        
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print ("Searched \(searchBar.text)")
+        
+        Business.searchWithTerm(term: self.searchBar.text!, completion: {
+            (businesses:[Business]?, error: Error?) -> Void in
+            self.businesses = businesses
+            self.tableView.reloadData()
+        })
+        self.view.endEditing(true)
+        }
     
     
 }
