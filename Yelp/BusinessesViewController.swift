@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftSpinner
 
 class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FiltersViewControllerDelegate, UISearchBarDelegate {
     
@@ -22,18 +23,14 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
         
-        searchBar.delegate = self
         
+        searchBar.delegate = self
+        SwiftSpinner.show("Searching...")
         Business.searchWithTerm(term: "Thai", completion: { (businesses: [Business]?, error: Error?) -> Void in
             
             self.businesses = businesses
             self.tableView.reloadData()
-            if let businesses = businesses {
-                for business in businesses {
-                    print(business.name!)
-                    print(business.address!)
-                }
-            }
+            SwiftSpinner.hide()
             
             }
         )
@@ -90,45 +87,44 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         
         var categories = filters["categories"] as? [String]
         var myDist = filters["distance"] as? Float
-       
+        var ifSort : YelpSortMode?
         if (filters["sort"] != nil) {
-            Business.searchWithTerm(term: "restaurants",
-                                    sort: YelpSortMode(rawValue: (filters["sort"] as! Int)),
-                                    dist: myDist,
-                                    categories: categories,
-                                    deals: filters["deals"] as! Bool,
-                                    completion: {
-                (businesses:[Business]?, error: Error?) -> Void in
+            ifSort = YelpSortMode(rawValue: filters["sort"] as! Int)
+        }
+        SwiftSpinner.show("Searching...")
+        Business.searchWithTerm(term: "",
+                                sort: ifSort,
+                                dist: myDist,
+                                categories: categories,
+                                deals: filters["deals"] as! Bool,
+                                completion: {
+            (businesses:[Business]?, error: Error?) -> Void in
+            
+            if (businesses != nil) {
                 self.businesses = businesses
+                print (self.businesses)
                 self.tableView.reloadData()
                 
-                }
-            )
-        } else {
-            Business.searchWithTerm(term: "restaurants",
-                                    sort: nil,
-                                    dist: myDist,
-                                    categories: categories,
-                                    deals: filters["deals"] as! Bool,
-                                    completion: {
-                                        (businesses:[Business]?, error: Error?) -> Void in
-                                        self.businesses = businesses
-                                        self.tableView.reloadData()
-                                        
-                }
-            )
+            }
+            if (error != nil) {
+                print (error.debugDescription)
+            }
+            SwiftSpinner.hide()
         }
-
-        
+        )
+        searchBar.text = "";
+   
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print ("Searched \(searchBar.text)")
-        
+        SwiftSpinner.show("Searching...")
         Business.searchWithTerm(term: self.searchBar.text!, completion: {
             (businesses:[Business]?, error: Error?) -> Void in
             self.businesses = businesses
             self.tableView.reloadData()
+            SwiftSpinner.hide()
+            
         })
         self.view.endEditing(true)
         }

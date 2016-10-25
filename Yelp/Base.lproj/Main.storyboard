@@ -151,14 +151,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="81" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bLW-cL-Pbt">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="52" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bLW-cL-Pbt">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SwitchCell" rowHeight="81" id="gqR-pZ-rW0" customClass="SwitchCell" customModule="Yelp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="375" height="81"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SwitchCell" rowHeight="52" id="gqR-pZ-rW0" customClass="SwitchCell" customModule="Yelp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gqR-pZ-rW0" id="A6S-xM-eOy">
-                                            <frame key="frameInset" width="375" height="81"/>
+                                            <frame key="frameInset" width="375" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9KB-mT-pfX">
@@ -171,7 +171,9 @@
                                             <constraints>
                                                 <constraint firstItem="ZQB-wU-W8H" firstAttribute="centerY" secondItem="A6S-xM-eOy" secondAttribute="centerY" id="2U8-pb-Pjz"/>
                                                 <constraint firstItem="9KB-mT-pfX" firstAttribute="centerY" secondItem="A6S-xM-eOy" secondAttribute="centerY" id="KNx-UG-qz7"/>
+                                                <constraint firstItem="ZQB-wU-W8H" firstAttribute="top" secondItem="A6S-xM-eOy" secondAttribute="top" constant="8" id="M98-P4-mTZ"/>
                                                 <constraint firstAttribute="trailing" secondItem="ZQB-wU-W8H" secondAttribute="trailing" constant="12" id="iQv-a6-35I"/>
+                                                <constraint firstItem="9KB-mT-pfX" firstAttribute="centerY" secondItem="A6S-xM-eOy" secondAttribute="centerY" id="nbd-tN-Yka"/>
                                                 <constraint firstItem="9KB-mT-pfX" firstAttribute="leading" secondItem="A6S-xM-eOy" secondAttribute="leading" constant="12" id="olf-IA-vfD"/>
                                             </constraints>
                                         </tableViewCellContentView>

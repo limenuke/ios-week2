@@ -98,17 +98,16 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: HeaderViewIdentifier)
+        
         categories = yelpCategories()
         allData = getAllData()
-        
         
         switchStates.append([Int:Bool]())   // Deals
         switchStates.append([Int:Bool]())   // Dist
         switchStates.append([Int:Bool]())   // Sort By
         switchStates.append([Int:Bool]())   // Category
         
-        
-        // Do any additional setup after loading the view.
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -137,12 +136,12 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell  = tableView.dequeueReusableCell(withIdentifier: "SwitchCell", for: indexPath) as! SwitchCell
-        
         let selectionsInCat = allData[indexPath.section].1
+        
         cell.switchLabel.text = selectionsInCat[indexPath.row]["name"]
         cell.delegate = self
         cell.onSwitch.isOn = switchStates[indexPath.section][indexPath.row] ?? false
-        
+
         return cell
     }
     
